@@ -1,4 +1,4 @@
-import type { CreateStudentRequestDto, StudentDto, UpdateStudentRequestDto } from './models';
+import type { ClassDto, CreateClassRequestDto, UpdateClassRequestDto } from './models';
 import { RestService } from '@abp/ng.core';
 import type { PagedResultDto } from '@abp/ng.core';
 import { Injectable } from '@angular/core';
@@ -7,14 +7,14 @@ import type { BaseResponseDto, GenericResponseDto, GetAllRequestDto, LookupDto }
 @Injectable({
   providedIn: 'root',
 })
-export class StudentService {
+export class ClassService {
   apiName = 'Default';
   
 
-  create = (request: CreateStudentRequestDto) =>
-    this.restService.request<any, GenericResponseDto<StudentDto>>({
+  create = (request: CreateClassRequestDto) =>
+    this.restService.request<any, GenericResponseDto<ClassDto>>({
       method: 'POST',
-      url: '/api/app/student',
+      url: '/api/app/class',
       body: request,
     },
     { apiName: this.apiName });
@@ -23,23 +23,23 @@ export class StudentService {
   delete = (id: number) =>
     this.restService.request<any, BaseResponseDto>({
       method: 'DELETE',
-      url: `/api/app/student/${id}`,
+      url: `/api/app/class/${id}`,
     },
     { apiName: this.apiName });
   
 
   get = (id: number) =>
-    this.restService.request<any, StudentDto>({
+    this.restService.request<any, ClassDto>({
       method: 'GET',
-      url: `/api/app/student/${id}`,
+      url: `/api/app/class/${id}`,
     },
     { apiName: this.apiName });
   
 
   getAll = (input: GetAllRequestDto) =>
-    this.restService.request<any, PagedResultDto<StudentDto>>({
+    this.restService.request<any, PagedResultDto<ClassDto>>({
       method: 'GET',
-      url: '/api/app/student',
+      url: '/api/app/class',
       params: { searchKey: input.searchKey, sorting: input.sorting, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
     },
     { apiName: this.apiName });
@@ -48,16 +48,16 @@ export class StudentService {
   getLookup = (searchText?: string) =>
     this.restService.request<any, LookupDto[]>({
       method: 'GET',
-      url: '/api/app/student/lookup',
+      url: '/api/app/class/lookup',
       params: { searchText },
     },
     { apiName: this.apiName });
   
 
-  update = (request: UpdateStudentRequestDto) =>
-    this.restService.request<any, GenericResponseDto<StudentDto>>({
+  update = (request: UpdateClassRequestDto) =>
+    this.restService.request<any, GenericResponseDto<ClassDto>>({
       method: 'POST',
-      url: '/api/app/student/update',
+      url: '/api/app/class/update',
       body: request,
     },
     { apiName: this.apiName });
