@@ -4,6 +4,7 @@ export interface ClassDto extends EntityDto<number> {
   code?: string;
   name?: string;
   branchId: number;
+  branchName?: string;
   sectionNames: string[];
 }
 

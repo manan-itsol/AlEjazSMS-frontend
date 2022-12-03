@@ -32,8 +32,13 @@ const routes: Routes = [
   },
   {
     path: 'sections',
-    loadChildren: () => 
+    loadChildren: () =>
       import('./section/section.module').then(m => m.SectionModule)
+  },
+  {
+    path: 'classes',
+    loadChildren: () => 
+      import('./class/class.module').then(m => m.ClassModule)
   },
 ];
 
