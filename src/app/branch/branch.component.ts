@@ -32,7 +32,7 @@ export class BranchComponent implements OnInit {
   }
 
   createBranch() {
-    this.selectedBranch = {} as BranchDto; // reset the selected book
+    this.selectedBranch = {} as BranchDto; // reset the selected branch
     this.buildForm();
     this.isModalOpen = true;
   }
