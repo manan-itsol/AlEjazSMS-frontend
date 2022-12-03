@@ -25,10 +25,20 @@ const routes: Routes = [
     loadChildren: () =>
       import('@abp/ng.setting-management').then(m => m.SettingManagementModule.forLazy()),
   },
+  {
+    path: 'branches',
+    loadChildren: () =>
+      import('./branch/branch.module').then(m => m.BranchModule)
+  },
+  {
+    path: 'sections',
+    loadChildren: () => 
+      import('./section/section.module').then(m => m.SectionModule)
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
