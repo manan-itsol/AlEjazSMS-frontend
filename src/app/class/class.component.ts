@@ -5,7 +5,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BranchService } from '@proxy/branches';
 import { ClassDto, ClassService } from '@proxy/classes';
 import { GetAllRequestDto, LookupDto } from '@proxy/common';
-import { SectionService } from '@proxy/sections';
+import { SectionDto, SectionService } from '@proxy/sections';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
 
 @Component({
   selector: 'app-class',
@@ -20,8 +21,9 @@ export class ClassComponent implements OnInit {
   selectedClass = {} as ClassDto;
   branchesLookup: LookupDto[];
   sectionsLookup: LookupDto[];
+  sectionDropdownSettings: {};
 
-  constructor(public readonly list: ListService<GetAllRequestDto>, 
+  constructor(public readonly list: ListService<GetAllRequestDto>,
     private classService: ClassService,
     private branchService: BranchService,
     private sectionService: SectionService,
@@ -35,20 +37,20 @@ export class ClassComponent implements OnInit {
       this.classes = response;
     });
 
+    this.sectionDropdownSettings = {
+      singleSelection: false,
+      idField: 'value',
+      textField: 'text',
+      itemsShowLimit: 3,
+      allowSearchFilter: true
+    } as IDropdownSettings;
   }
 
   createClass() {
     this.selectedClass = {} as ClassDto; // reset the selected section
     this.buildForm();
     this.isModalOpen = true;
-
-    this.branchService.getLookup().subscribe(data=>{
-      this.branchesLookup = data;
-    });
-
-    this.sectionService.getLookup().subscribe(data=>{
-      this.sectionsLookup = data;
-    });
+    this.loadCreateOrEditData();
   }
 
   editClass(id: number) {
@@ -56,27 +58,53 @@ export class ClassComponent implements OnInit {
       this.selectedClass = section;
       this.buildForm();
       this.isModalOpen = true;
+      this.loadCreateOrEditData();
+    });
+  }
+
+  loadCreateOrEditData() {
+    this.branchService.getLookup().subscribe(data => {
+      this.branchesLookup = data;
+    });
+
+    this.sectionService.getLookup().subscribe(data => {
+      this.sectionsLookup = data;
     });
   }
 
   buildForm() {
+    debugger;
+    var selectedSections = this.selectedClass?.sections?.map((x) => {
+      return { value: x.id, text: x.name };
+    }) || null;
     this.form = this.formBuilder.group({
-      id:[this.selectedClass.id || null],
+      id: [this.selectedClass.id || null],
       code: [this.selectedClass.code || '', Validators.required],
       name: [this.selectedClass.name || '', Validators.required],
-      branchId:[this.selectedClass.branchId || null, Validators.required],
-      sectionIds:[null]
+      branchId: [this.selectedClass.branchId || null, Validators.required],
+      sectionIds: [selectedSections || null]
     });
+  }
+
+  parseSectionNames(sections: SectionDto[]) {
+    return sections.map(x => x.name).join(', ');
   }
 
   save() {
     if (this.form.invalid) {
       return;
     }
-
+    const formVal = this.form.value;
+    const rqData = {
+      id: formVal.id,
+      code: formVal.code,
+      name: formVal.name,
+      branchId: formVal.branchId,
+      sectionIds: formVal.sectionIds?.map(a => a.value)
+    }
     const request = this.selectedClass.id
-      ? this.classService.update(this.form.value)
-      : this.classService.create(this.form.value);
+      ? this.classService.update(rqData)
+      : this.classService.create(rqData);
 
     request.subscribe(() => {
       this.isModalOpen = false;

@@ -1,11 +1,12 @@
 import type { EntityDto } from '@abp/ng.core';
+import type { SectionDto } from '../sections/models';
 
 export interface ClassDto extends EntityDto<number> {
   code?: string;
   name?: string;
   branchId: number;
   branchName?: string;
-  sectionNames: string[];
+  sections: SectionDto[];
 }
 
 export interface CreateClassRequestDto {
