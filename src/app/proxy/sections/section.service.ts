@@ -54,6 +54,14 @@ export class SectionService {
     { apiName: this.apiName });
   
 
+  getLookupByClass = (classId: number) =>
+    this.restService.request<any, LookupDto[]>({
+      method: 'GET',
+      url: `/api/app/section/lookup-by-class/${classId}`,
+    },
+    { apiName: this.apiName });
+  
+
   update = (request: UpdateSectionRequestDto) =>
     this.restService.request<any, GenericResponseDto<SectionDto>>({
       method: 'POST',

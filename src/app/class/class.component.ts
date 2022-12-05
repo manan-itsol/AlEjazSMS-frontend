@@ -65,24 +65,30 @@ export class ClassComponent implements OnInit {
   loadCreateOrEditData() {
     this.branchService.getLookup().subscribe(data => {
       this.branchesLookup = data;
+      //TODO: to fix for edit
+      var branchId = this.selectedClass.branchId || null;
+      this.form.controls['branchId'].setValue(branchId);
     });
 
     this.sectionService.getLookup().subscribe(data => {
       this.sectionsLookup = data;
+      //TODO: to fix for edit
+      var selectedSections = this.selectedClass?.sections?.map((x) => {
+        return { value: x.id, text: x.name };
+      }) || null;
+      this.form.get('sectionIds').setValue(selectedSections || null);
     });
   }
 
   buildForm() {
     debugger;
-    var selectedSections = this.selectedClass?.sections?.map((x) => {
-      return { value: x.id, text: x.name };
-    }) || null;
+
     this.form = this.formBuilder.group({
       id: [this.selectedClass.id || null],
       code: [this.selectedClass.code || '', Validators.required],
       name: [this.selectedClass.name || '', Validators.required],
       branchId: [this.selectedClass.branchId || null, Validators.required],
-      sectionIds: [selectedSections || null]
+      sectionIds: [null]
     });
   }
 
