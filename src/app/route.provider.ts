@@ -15,6 +15,55 @@ function configureRoutes(routesService: RoutesService) {
         order: 1,
         layout: eLayoutType.application,
       },
+      {
+        path: '/students',
+        name: 'Students',
+        iconClass: 'fas fa-graduation-cap',
+        order: 1,
+        layout: eLayoutType.application,
+      },
+      {
+        path: '/branches',
+        name: 'Branches',
+        iconClass: 'fas fa-school',
+        order: 1,
+        layout: eLayoutType.application,
+      },
+      {
+        path: '/classes',
+        name: 'Classes',
+        iconClass: 'fas fa-chalkboard',
+        order: 1,
+        layout: eLayoutType.application,
+      },
+      {
+        path: '/sections',
+        name: 'Sections',
+        iconClass: 'fas fa-award',
+        order: 1,
+        layout: eLayoutType.application,
+      },
+      {
+        path: '/sections',
+        name: 'Sections',
+        iconClass: 'fas fa-award',
+        order: 1,
+        layout: eLayoutType.application,
+      },
+      {
+        path: '/feeStructure',
+        name: 'Fee Structure',
+        iconClass: 'fas fa-file-invoice',
+        order: 1,
+        layout: eLayoutType.application,
+      },
+      {
+        path: '/feeGeneration',
+        name: 'Fee Generation',
+        iconClass: 'fas fa-money-bill',
+        order: 1,
+        layout: eLayoutType.application,
+      },
     ]);
   };
 }
