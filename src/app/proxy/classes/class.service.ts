@@ -54,6 +54,15 @@ export class ClassService {
     { apiName: this.apiName });
   
 
+  getLookupByBranch = (branchId: number, searchText?: string) =>
+    this.restService.request<any, LookupDto[]>({
+      method: 'GET',
+      url: `/api/app/class/lookup-by-branch/${branchId}`,
+      params: { searchText },
+    },
+    { apiName: this.apiName });
+  
+
   update = (request: UpdateClassRequestDto) =>
     this.restService.request<any, GenericResponseDto<ClassDto>>({
       method: 'POST',
