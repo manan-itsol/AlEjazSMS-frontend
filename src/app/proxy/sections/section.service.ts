@@ -40,7 +40,7 @@ export class SectionService {
     this.restService.request<any, PagedResultDto<SectionDto>>({
       method: 'GET',
       url: '/api/app/section',
-      params: { searchKey: input.searchKey, sorting: input.sorting, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
+      params: { sorting: input.sorting, skipCount: input.skipCount, maxResultCount: input.maxResultCount, searchKey: input.searchKey },
     },
     { apiName: this.apiName });
   

@@ -40,7 +40,7 @@ export class ClassService {
     this.restService.request<any, PagedResultDto<ClassDto>>({
       method: 'GET',
       url: '/api/app/class',
-      params: { searchKey: input.searchKey, sorting: input.sorting, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
+      params: { sorting: input.sorting, skipCount: input.skipCount, maxResultCount: input.maxResultCount, searchKey: input.searchKey },
     },
     { apiName: this.apiName });
   

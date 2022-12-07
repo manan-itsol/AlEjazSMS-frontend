@@ -40,7 +40,7 @@ export class BranchService {
     this.restService.request<any, PagedResultDto<BranchDto>>({
       method: 'GET',
       url: '/api/app/branch',
-      params: { searchKey: input.searchKey, sorting: input.sorting, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
+      params: { sorting: input.sorting, skipCount: input.skipCount, maxResultCount: input.maxResultCount, searchKey: input.searchKey },
     },
     { apiName: this.apiName });
   

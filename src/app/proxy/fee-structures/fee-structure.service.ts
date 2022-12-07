@@ -40,7 +40,7 @@ export class FeeStructureService {
     this.restService.request<any, PagedResultDto<FeeStructureDto>>({
       method: 'GET',
       url: '/api/app/fee-structure',
-      params: { searchKey: input.searchKey, sorting: input.sorting, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
+      params: { sorting: input.sorting, skipCount: input.skipCount, maxResultCount: input.maxResultCount, searchKey: input.searchKey },
     },
     { apiName: this.apiName });
   

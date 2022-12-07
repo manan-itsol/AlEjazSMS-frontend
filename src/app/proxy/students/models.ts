@@ -1,5 +1,6 @@
 import type { EntityDto } from '@abp/ng.core';
 import type { StudentStatus } from './student-status.enum';
+import type { GetAllRequestDto } from '../common/models';
 
 export interface CreateStudentRequestDto {
   rollNo: number;
@@ -12,7 +13,7 @@ export interface CreateStudentRequestDto {
   admissionDate?: string;
   classId: number;
   sectionId: number;
-  feeStructureId?: number;
+  dateOfBirth?: string;
 }
 
 export interface StudentDto extends EntityDto<number> {
@@ -24,9 +25,17 @@ export interface StudentDto extends EntityDto<number> {
   fatherCNIC?: string;
   presentAddress?: string;
   admissionDate?: string;
-  sectionId: number;
-  feeStructureId?: number;
+  classId?: number;
+  className?: string;
+  sectionId?: number;
+  sectionName?: string;
   status: StudentStatus;
+}
+
+export interface StudentGetAllRequestDto extends GetAllRequestDto {
+  branchIds: number[];
+  classIds: number[];
+  sectionIds: number[];
 }
 
 export interface UpdateStudentRequestDto extends CreateStudentRequestDto {
