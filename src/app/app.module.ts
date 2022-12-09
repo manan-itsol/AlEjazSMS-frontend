@@ -15,6 +15,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { APP_ROUTE_PROVIDER } from './route.provider';
 import { SharedModule } from './shared/shared.module';
+import { FeeStructureComponent } from './fee-structure/fee-structure.component';
+import { FeeGenerationComponent } from './fee-generation/fee-generation.component';
 
 @NgModule({
   imports: [

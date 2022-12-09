@@ -44,21 +44,14 @@ function configureRoutes(routesService: RoutesService) {
         layout: eLayoutType.application,
       },
       {
-        path: '/sections',
-        name: 'Sections',
-        iconClass: 'fas fa-award',
-        order: 1,
-        layout: eLayoutType.application,
-      },
-      {
-        path: '/feeStructure',
+        path: '/feestructure',
         name: 'Fee Structure',
         iconClass: 'fas fa-file-invoice',
         order: 1,
         layout: eLayoutType.application,
       },
       {
-        path: '/feeGeneration',
+        path: '/feegeneration',
         name: 'Fee Generation',
         iconClass: 'fas fa-money-bill',
         order: 1,

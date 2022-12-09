@@ -45,6 +45,16 @@ const routes: Routes = [
     loadChildren: () => 
       import('./student/student.module').then(m => m.StudentModule)
   },
+  {
+    path: 'feestructure',
+    loadChildren: () => 
+      import('./fee-structure/fee-structure.module').then(m => m.FeeStructureModule)
+  },
+  {
+    path: 'feegeneration',
+    loadChildren: () => 
+      import('./fee-generation/fee-generation.module').then(m => m.FeeGenerationModule)
+  },
 ];
 
 @NgModule({
