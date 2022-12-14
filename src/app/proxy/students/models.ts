@@ -25,6 +25,7 @@ export interface StudentDto extends EntityDto<number> {
   fatherCNIC?: string;
   presentAddress?: string;
   admissionDate?: string;
+  branchId?: number;
   classId?: number;
   className?: string;
   sectionId?: number;
