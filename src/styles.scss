@@ -29,3 +29,16 @@
   }
 
 }
+
+.multi-select-form-control {
+  padding: 4px;
+
+  div {
+    div {
+      span {
+        border: none !important;
+        border-radius: 4px !important;
+      }
+    }
+  }
+}

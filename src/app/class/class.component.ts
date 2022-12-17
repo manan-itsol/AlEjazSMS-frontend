@@ -16,6 +16,7 @@ import { IDropdownSettings } from 'ng-multiselect-dropdown';
 export class ClassComponent implements OnInit {
 
   classes = { items: [], totalCount: 0 } as PagedResultDto<ClassDto>;
+  classesCache = { items: [], totalCount: 0 } as PagedResultDto<ClassDto>;
   isModalOpen = false;
   form: FormGroup;
   selectedClass = {} as ClassDto;
@@ -35,6 +36,7 @@ export class ClassComponent implements OnInit {
 
     this.list.hookToQuery(classestreamCreator).subscribe((response) => {
       this.classes = response;
+      this.classesCache = response;
     });
 
     this.sectionDropdownSettings = {
@@ -124,6 +126,16 @@ export class ClassComponent implements OnInit {
       if (status === Confirmation.Status.confirm) {
         this.classService.delete(id).subscribe(() => this.list.get());
       }
+    });
+  }
+
+  onSearchValueChange(value) {
+    this.classService.getLookup(value).subscribe(data =>  {
+      let results = this.classesCache.items.filter(x => data.find(y => Number(y.value) == x.id));
+      this.classes = {
+        items: results,
+        totalCount: results.length
+      };
     });
   }
 

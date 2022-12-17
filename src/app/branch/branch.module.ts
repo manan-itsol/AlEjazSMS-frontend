@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { BranchRoutingModule } from './branch-routing.module';
 import { BranchComponent } from './branch.component';
 import { SharedModule } from '../shared/shared.module';
+import { SearchBoxModule } from '../components/search-box/search-box.module';
 
 
 @NgModule({
@@ -12,6 +13,7 @@ import { SharedModule } from '../shared/shared.module';
   ],
   imports: [
     CommonModule,
+    SearchBoxModule,
     BranchRoutingModule,
     SharedModule
   ]

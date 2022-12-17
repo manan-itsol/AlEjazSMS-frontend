@@ -6,7 +6,6 @@ import { ClassDto, ClassService } from '@proxy/classes';
 import { SectionDto, SectionService } from '@proxy/sections';
 import { ListService, PagedResultDto } from '@abp/ng.core';
 import { GetAllRequestDto, LookupDto } from '@proxy/common';
-import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { StudentDto, StudentService } from '@proxy/students';
 import { DatePipe } from '@angular/common'
 
@@ -19,6 +18,7 @@ export class StudentComponent implements OnInit {
 
   isModalOpen = false;
   students = { items: [], totalCount: 0 } as PagedResultDto<StudentDto>;
+  studentsCache = { items: [], totalCount: 0 } as PagedResultDto<StudentDto>;
   form: FormGroup;
   selectedStudent = {} as StudentDto;
   branchesLookup: LookupDto[];
@@ -35,10 +35,10 @@ export class StudentComponent implements OnInit {
     public datepipe: DatePipe) { }
 
   ngOnInit(): void {
-    const classestreamCreator = (query) => this.studentService.getAll(query);
-
-    this.list.hookToQuery(classestreamCreator).subscribe((response) => {
+    const studentstreamCreator = (query) => this.studentService.getAll(query);
+    this.list.hookToQuery(studentstreamCreator).subscribe((response) => {
       this.students = response;
+      this.studentsCache = response;
     });
   }
 
@@ -61,21 +61,24 @@ export class StudentComponent implements OnInit {
   loadCreateOrEditData() {
     this.branchService.getLookup().subscribe(data => {
       this.branchesLookup = data;
-      //TODO: to fix for edit
-      var branchId = this.selectedStudent.id || null;
-      this.form.controls['id'].setValue(branchId);
-    });
 
-    this.sectionService.getLookup().subscribe(data => {
-      this.sectionsLookup = data;
-      //TODO: to fix for edit
+      var branchId = this.selectedStudent.branchId || null;
+      if(branchId) {
+        this.form.controls['branchId'].setValue(branchId);
+        this.onChangeBranch(branchId);
+      }
+      
+      var classId = this.selectedStudent.classId || null;
+      if(branchId && classId) {
+        this.form.controls['classId'].setValue(classId);
+        this.onClassChange(classId);
+      }
+
       var sectionId = this.selectedStudent.sectionId || null;
-      this.form.controls['sectionId'].setValue(sectionId);
-      debugger;
-    });
+      if(classId && sectionId) {
+        this.form.controls['sectionId'].setValue(sectionId);
+      }
 
-    this.classService.getLookup().subscribe(data => {
-      this.classesLookup = data;
     });
   }
 
@@ -118,7 +121,7 @@ export class StudentComponent implements OnInit {
       status: formVal.status
     }
 
-    debugger;
+
     const request = this.selectedStudent.id
       ? this.studentService.update(rqData)
       : this.studentService.create(rqData);
@@ -138,8 +141,39 @@ export class StudentComponent implements OnInit {
     });
   }
 
-  onChangeClass(val) {
-    debugger;
+  onChangeBranch(branchId) {
+    if(branchId && Number(branchId)) {
+      this.classService.getLookupByBranch(branchId).subscribe(data => {
+        this.classesLookup = data;
+      });
+    }
+  }
+
+  onClassChange(classId) {
+    if(classId) {
+      this.sectionService.getLookupByClass(classId).subscribe(data => {
+        this.sectionsLookup = data;
+      });
+    }
+  }
+
+  onSectionChange(sectionId) {
+    const formVal = this.form.value;
+    if(formVal && formVal.classId && sectionId) {
+      this.studentService.getNextRollNo(formVal.classId, sectionId).subscribe(data =>  {
+        this.form.controls['rollNo'].setValue(data);
+      });
+    }
+  }
+
+  onSearchValueChange(value) {
+    this.studentService.getLookup(value).subscribe(data =>  {
+      let results = this.studentsCache.items.filter(x => data.find(y => Number(y.value) == x.id));
+      this.students = {
+        items: results,
+        totalCount: results.length
+      };
+    });
   }
 
 }

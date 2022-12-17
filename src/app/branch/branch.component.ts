@@ -13,6 +13,7 @@ import { GetAllRequestDto } from '@proxy/common';
 export class BranchComponent implements OnInit {
 
   branches = { items: [], totalCount: 0 } as PagedResultDto<BranchDto>;
+  branchesCache = { items: [], totalCount: 0 } as PagedResultDto<BranchDto>;
   isModalOpen = false;
   form: FormGroup;
   selectedBranch = {} as BranchDto;
@@ -27,6 +28,7 @@ export class BranchComponent implements OnInit {
 
     this.list.hookToQuery(branchStreamCreator).subscribe((response) => {
       this.branches = response;
+      this.branchesCache = response;
     });
 
   }
@@ -76,4 +78,15 @@ export class BranchComponent implements OnInit {
       }
     });
   }
+
+  onSearchValueChange(value) {
+    this.branchService.getLookup(value).subscribe(data =>  {
+      let results = this.branchesCache.items.filter(x => data.find(y => Number(y.value) == x.id));
+      this.branches = {
+        items: results,
+        totalCount: results.length
+      };
+    });
+  }
+
 }

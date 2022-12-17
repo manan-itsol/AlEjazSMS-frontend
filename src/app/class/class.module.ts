@@ -6,6 +6,7 @@ import { ClassComponent } from './class.component';
 import { SharedModule } from '../shared/shared.module';
 import { JoinPipe } from '../shared/utils/join.pipe';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { SearchBoxModule } from '../components/search-box/search-box.module';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
   ],
   imports: [
     CommonModule,
+    SearchBoxModule,
     ClassRoutingModule,
     NgMultiSelectDropDownModule.forRoot(),
     SharedModule

@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { StudentRoutingModule } from './student-routing.module';
 import { StudentComponent } from './student.component';
 import { SharedModule } from '../shared/shared.module';
+import { NgxMaskModule } from 'ngx-mask'
+import { SearchBoxModule } from '../components/search-box/search-box.module';
 
 
 @NgModule({
@@ -12,8 +14,10 @@ import { SharedModule } from '../shared/shared.module';
   ],
   imports: [
     CommonModule,
+    SearchBoxModule,
     StudentRoutingModule,
-    SharedModule
+    SharedModule,
+    NgxMaskModule.forRoot(),
   ]
 })
 export class StudentModule { }

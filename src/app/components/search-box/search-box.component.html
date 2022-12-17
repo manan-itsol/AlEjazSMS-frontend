@@ -1,0 +1,21 @@
+<div class="card">
+    <div class="card-header">
+        <div class="row">
+            <div class="col col-md-6">
+                <h5 class="card-title">
+                    {{title}}
+                </h5>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+
+        <div class="row">
+            <div class="col-12">
+                <input type="search" class="form-control" placeholder="{{placeholder}}"
+                    [ngModel]="searchText" (ngModelChange)="searchValueChange($event)">
+            </div>
+        </div>
+
+    </div>
+</div>

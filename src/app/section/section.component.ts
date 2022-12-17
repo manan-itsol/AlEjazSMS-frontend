@@ -12,6 +12,7 @@ import { SectionDto, SectionService } from '@proxy/sections';
 })
 export class SectionComponent implements OnInit {
   sections = { items: [], totalCount: 0 } as PagedResultDto<SectionDto>;
+  sectionsCache = { items: [], totalCount: 0 } as PagedResultDto<SectionDto>;
   isModalOpen = false;
   form: FormGroup;
   selectedSection = {} as SectionDto;
@@ -26,6 +27,7 @@ export class SectionComponent implements OnInit {
 
     this.list.hookToQuery(sectionStreamCreator).subscribe((response) => {
       this.sections = response;
+      this.sectionsCache = response;
     });
 
   }
@@ -72,6 +74,16 @@ export class SectionComponent implements OnInit {
       if (status === Confirmation.Status.confirm) {
         this.sectionService.delete(id).subscribe(() => this.list.get());
       }
+    });
+  }
+
+  onSearchValueChange(value) {
+    this.sectionService.getLookup(value).subscribe(data =>  {
+      let results = this.sectionsCache.items.filter(x => data.find(y => Number(y.value) == x.id));
+      this.sections = {
+        items: results,
+        totalCount: results.length
+      };
     });
   }
 
